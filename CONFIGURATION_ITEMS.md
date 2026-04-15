@@ -2,11 +2,11 @@
 
 - **ID**: IC-002
 - **Tipo**: Código-fonte
-- **Versão**: 1.0.0
+- **Versão**: 1.1.0
 - **Repositório**: https://github.com/LaisaMireli/petcare-web
-- **Branch**: main
-- **Commit ID**: ac766ef
-- **Mudanças**: Estabelecimento da baseline do projeto legado PetCare e atualização das configurações de ambiente para a nova disciplina.
+- **Branch**: feature/tela-login-petcare
+- **Commit ID**: [Aguardando novo ID]
+- **Mudanças**: Evolução da interface: Implementação da tela de Login responsiva com componentes Tailwind e lógica de formulário.
 - **Data Release**: 15/04/2026
 
 ---
@@ -15,11 +15,11 @@
 
 - **ID**: IC-006
 - **Tipo**: Configuração
-- **Versão**: 1.0.0
-- **Repositório**: https://github.com/LaisaMireli/petcare-web/blob/main/package.json
-- **Branch**: main
-- **Commit ID**: ac766ef
-- **Mudanças**: Estabelecimento da baseline das dependências do frontend (Next.js, React, Tailwind).
+- **Versão**: 1.1.0
+- **Repositório**: https://github.com/LaisaMireli/petcare-web/blob/feature/tela-login-petcare/package.json
+- **Branch**: feature/tela-login-petcare
+- **Commit ID**: [Aguardando novo ID]
+- **Mudanças**: Adição da biblioteca lucide-react como dependência para suporte visual da nova interface.
 - **Data Release**: 15/04/2026
 
 ---
@@ -28,9 +28,9 @@
 
 - **ID**: IC-007
 - **Tipo**: Documento
-- **Versão**: 1.0.0
-- **Repositório**: https://github.com/LaisaMireli/petcare-web/blob/main/CONFIGURATION_ITEMS.md
-- **Branch**: main
-- **Commit ID**: ac766ef
-- **Mudanças**: Criação do README inicial e definição dos itens de configuração para baseline.
+- **Versão**: 1.1.0
+- **Repositório**: https://github.com/LaisaMireli/petcare-web/blob/feature/tela-login-petcare/CONFIGURATION_ITEMS.md
+- **Branch**: feature/tela-login-petcare
+- **Commit ID**: [Aguardando novo ID]
+- **Mudanças**: Atualização do relatório de ICs para refletir a primeira alteração de configuração após a baseline.
 - **Data Release**: 15/04/2026
