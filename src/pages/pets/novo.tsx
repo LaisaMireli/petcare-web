@@ -7,13 +7,11 @@ export default function AddPetScreen() {
 
   const handleSalvar = (e: React.FormEvent) => {
     e.preventDefault();
-    // Após salvar no banco, volta para a tela anterior
     router.back();
   };
 
   return (
     <div className="min-h-screen bg-brand-purple pb-10">
-      {/* Header */}
       <header className="p-6 flex items-center gap-4 relative z-10">
         <button 
           onClick={() => router.back()} 
@@ -27,7 +25,6 @@ export default function AddPetScreen() {
       <main className="px-6 pt-2">
         <form className="bg-white p-6 sm:p-8 rounded-[2.5rem] shadow-sm space-y-5" onSubmit={handleSalvar}>
           
-          {/* Upload de Foto */}
           <div className="flex flex-col items-center justify-center mb-6">
             <div className="w-28 h-28 bg-brand-purple rounded-full flex items-center justify-center border-4 border-white shadow-md relative overflow-hidden group hover:border-brand-purpleDark transition-colors">
               <Camera className="w-8 h-8 text-brand-purpleDark group-hover:scale-110 transition-transform" />
@@ -38,13 +35,13 @@ export default function AddPetScreen() {
 
           <div>
             <label className="block text-sm font-medium text-brand-dark mb-1">Nome do Pet</label>
-            <input type="text" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors" placeholder="Ex: Rex" required />
+            <input type="text" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors text-brand-dark placeholder-gray-400" placeholder="Ex: Rex" required />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-brand-dark mb-1">Espécie</label>
-              <select className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange appearance-none transition-colors">
+              <select className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange appearance-none transition-colors text-brand-dark">
                 <option>Cachorro</option>
                 <option>Gato</option>
                 <option>Pássaro</option>
@@ -53,14 +50,14 @@ export default function AddPetScreen() {
             </div>
             <div>
               <label className="block text-sm font-medium text-brand-dark mb-1">Peso (kg)</label>
-              <input type="number" step="0.1" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors" placeholder="0.0" />
+              <input type="number" step="0.1" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors text-brand-dark placeholder-gray-400" placeholder="0.0" />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-brand-dark mb-1">Altura (cm)</label>
-              <input type="number" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors" placeholder="0" />
+              <input type="number" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors text-brand-dark placeholder-gray-400" placeholder="0" />
             </div>
             <div>
               <label className="block text-sm font-medium text-brand-dark mb-1">Sexo</label>
@@ -71,11 +68,10 @@ export default function AddPetScreen() {
             </div>
           </div>
 
-          {/* NOVO CAMPO: Sobre o Pet */}
           <div>
             <label className="block text-sm font-medium text-brand-dark mb-1">Sobre o Pet</label>
             <textarea 
-              className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors resize-none h-28" 
+              className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors resize-none h-28 text-brand-dark placeholder-gray-400" 
               placeholder="Conte um pouco sobre a personalidade, gostos e necessidades especiais do seu bichinho..."
             ></textarea>
           </div>

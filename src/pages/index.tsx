@@ -8,7 +8,6 @@ export default function AuthScreen() {
 
   const handleEntrar = (e: React.FormEvent) => {
     e.preventDefault();
-    // Redireciona para o dashboard após o login
     router.push('/home');
   };
 
@@ -31,16 +30,16 @@ export default function AuthScreen() {
           {!isLogin && (
             <div>
               <label className="block text-sm font-medium text-brand-dark mb-1">Nome</label>
-              <input type="text" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors" placeholder="Seu nome" />
+              <input type="text" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors text-brand-dark placeholder-gray-400" placeholder="Seu nome" />
             </div>
           )}
           <div>
             <label className="block text-sm font-medium text-brand-dark mb-1">E-mail</label>
-            <input type="email" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors" placeholder="seu@email.com" />
+            <input type="email" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors text-brand-dark placeholder-gray-400" placeholder="seu@email.com" />
           </div>
           <div>
             <label className="block text-sm font-medium text-brand-dark mb-1">Senha</label>
-            <input type="password" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors" placeholder="••••••••" />
+            <input type="password" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors text-brand-dark placeholder-gray-400" placeholder="••••••••" />
           </div>
 
           <button type="submit" className="w-full bg-brand-orange hover:bg-brand-orangeHover text-white font-semibold py-3 rounded-xl transition-colors mt-6">
