@@ -72,7 +72,6 @@ export default function HomeDashboard() {
           
           {/* Banner Hero Desktop preenchendo o container */}
           <div className="w-full bg-brand-purpleDark rounded-[3rem] p-12 flex items-center justify-between relative overflow-hidden shadow-lg border-4 border-white h-80">
-            {/* Formas decorativas no fundo */}
             <div className="absolute -right-20 -top-20 w-80 h-80 bg-white/20 rounded-full blur-2xl"></div>
             <div className="absolute left-40 -bottom-20 w-64 h-64 bg-brand-purple/40 rounded-full blur-xl"></div>
             <PawPrint className="absolute right-1/3 bottom-10 w-40 h-40 text-white/10 -rotate-12" />
@@ -89,13 +88,12 @@ export default function HomeDashboard() {
               </button>
             </div>
             
-            {/* Imagem do pet em destaque no desktop */}
             <div className="relative z-10 w-64 h-64 mr-8 xl:mr-24">
               <img src="https://images.unsplash.com/photo-1543852786-1cf6624b9987?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Cat" className="w-full h-full object-cover rounded-[2.5rem] border-8 border-white shadow-xl rotate-3 hover:rotate-0 transition-transform duration-300" />
             </div>
           </div>
 
-          {/* Cards de Resumo Rápido (4 Colunas fluidas) */}
+          {/* Cards de Resumo Rápido */}
           <div className="w-full grid grid-cols-4 gap-6 xl:gap-8">
             <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100 flex items-center gap-5 hover:border-brand-purple transition-colors">
               <div className="bg-brand-purple/50 p-4 rounded-2xl text-brand-purpleDark"><ShieldCheck className="w-8 h-8" /></div>
@@ -126,7 +124,6 @@ export default function HomeDashboard() {
 
             <div className="w-full grid grid-cols-4 xl:grid-cols-5 gap-6 xl:gap-8">
               
-              {/* Pet Card Estilizado */}
               <Link href="/pets/detalhes" className="group bg-white rounded-[2rem] p-6 shadow-sm hover:shadow-xl transition-all border-2 border-transparent hover:border-brand-orange relative flex flex-col items-center cursor-pointer">
                 <div className="absolute top-4 right-4 bg-green-100 text-green-600 text-xs font-bold px-3 py-1 rounded-full z-10">
                   Saudável
@@ -138,7 +135,6 @@ export default function HomeDashboard() {
                 <p className="text-sm text-brand-gray font-semibold mt-1">Gato • 3.2 kg</p>
               </Link>
               
-              {/* Botão de Adicionar Novo Pet */}
               <Link href="/pets/novo" className="bg-brand-purple/20 border-2 border-dashed border-brand-purpleDark rounded-[2rem] p-6 flex flex-col items-center justify-center text-brand-purpleDark hover:bg-white hover:border-brand-orange hover:text-brand-orange hover:shadow-lg transition-all cursor-pointer min-h-[260px] group">
                 <div className="bg-white p-4 rounded-full mb-4 group-hover:bg-brand-orange/10 transition-colors shadow-sm">
                   <Plus className="w-10 h-10" />
@@ -155,35 +151,38 @@ export default function HomeDashboard() {
             
             <div className="w-full grid grid-cols-3 gap-6 xl:gap-8">
               
-              <div className="bg-white p-5 rounded-[2rem] shadow-sm border border-gray-100 flex items-center gap-5 cursor-pointer hover:border-brand-purple hover:shadow-md transition-all">
+              {/* Artigo 1: Alimentação (Link externo) */}
+              <a href="https://www.petz.com.br/blog/cachorros/alimentacao-natural-para-cachorro/" target="_blank" rel="noopener noreferrer" className="bg-white p-5 rounded-[2rem] shadow-sm border border-gray-100 flex items-center gap-5 cursor-pointer hover:border-brand-purple hover:shadow-md transition-all group">
                 <div className="w-24 h-24 bg-blue-50 rounded-2xl overflow-hidden shrink-0 border-4 border-white shadow-sm">
-                  <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Dog" className="w-full h-full object-cover" />
+                  <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Dog" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                 </div>
                 <div>
-                  <h4 className="font-extrabold text-brand-dark text-lg leading-tight mb-1">Alimentação Natural</h4>
+                  <h4 className="font-extrabold text-brand-dark text-lg leading-tight mb-1 group-hover:text-brand-orange transition-colors">Alimentação Natural</h4>
                   <p className="text-sm text-brand-gray font-medium">Como começar hoje a transição</p>
                 </div>
-              </div>
+              </a>
 
-              <div className="bg-white p-5 rounded-[2rem] shadow-sm border border-gray-100 flex items-center gap-5 cursor-pointer hover:border-brand-purple hover:shadow-md transition-all">
+              {/* Artigo 2: Brincadeiras (Link externo) */}
+              <a href="https://www.petz.com.br/blog/pets/brincadeiras-para-gatos/" target="_blank" rel="noopener noreferrer" className="bg-white p-5 rounded-[2rem] shadow-sm border border-gray-100 flex items-center gap-5 cursor-pointer hover:border-brand-purple hover:shadow-md transition-all group">
                 <div className="w-24 h-24 bg-orange-50 rounded-2xl overflow-hidden shrink-0 border-4 border-white shadow-sm">
-                  <img src="https://images.unsplash.com/photo-1548767797-d8c844163c4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Cat Toy" className="w-full h-full object-cover" />
+                  <img src="https://images.unsplash.com/photo-1548767797-d8c844163c4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Cat Toy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                 </div>
                 <div>
-                  <h4 className="font-extrabold text-brand-dark text-lg leading-tight mb-1">Brincadeiras Indoor</h4>
+                  <h4 className="font-extrabold text-brand-dark text-lg leading-tight mb-1 group-hover:text-brand-orange transition-colors">Brincadeiras Indoor</h4>
                   <p className="text-sm text-brand-gray font-medium">Gaste a energia do seu gato</p>
                 </div>
-              </div>
+              </a>
 
-              <div className="bg-white p-5 rounded-[2rem] shadow-sm border border-gray-100 flex items-center gap-5 cursor-pointer hover:border-brand-purple hover:shadow-md transition-all">
+              {/* Artigo 3: Higiene (Link externo) */}
+              <a href="https://www.petz.com.br/blog/cachorros/higiene-e-cuidados/banho-em-cachorro/" target="_blank" rel="noopener noreferrer" className="bg-white p-5 rounded-[2rem] shadow-sm border border-gray-100 flex items-center gap-5 cursor-pointer hover:border-brand-purple hover:shadow-md transition-all group">
                 <div className="w-24 h-24 bg-teal-50 rounded-2xl overflow-hidden shrink-0 border-4 border-white shadow-sm">
-                  <img src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Pet Bath" className="w-full h-full object-cover" />
+                  <img src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Pet Bath" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                 </div>
                 <div>
-                  <h4 className="font-extrabold text-brand-dark text-lg leading-tight mb-1">Higiene Pet</h4>
+                  <h4 className="font-extrabold text-brand-dark text-lg leading-tight mb-1 group-hover:text-brand-orange transition-colors">Higiene Pet</h4>
                   <p className="text-sm text-brand-gray font-medium">Cuidados com banho e tosa</p>
                 </div>
-              </div>
+              </a>
 
             </div>
           </div>
