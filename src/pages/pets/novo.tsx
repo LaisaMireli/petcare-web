@@ -1,13 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Camera, ChevronLeft } from 'lucide-react';
 import { useRouter } from 'next/router';
 
 export default function AddPetScreen() {
   const router = useRouter();
+  
+  // Estados para guardar o que o usuário digita
+  const [nome, setNome] = useState('');
+  const [especie, setEspecie] = useState('Cachorro');
+  const [peso, setPeso] = useState('');
+  const [sobre, setSobre] = useState('');
 
   const handleSalvar = (e: React.FormEvent) => {
     e.preventDefault();
-    router.back();
+    
+    // Cria o objeto do novo pet
+    const novoPet = {
+      id: Date.now().toString(), // Gera um ID único baseado na hora
+      nome,
+      especie,
+      peso,
+      sobre,
+      // Uma imagem padrão genérica para os novos pets não ficarem sem foto
+      imagem: especie === 'Gato' 
+        ? "https://images.unsplash.com/photo-1543852786-1cf6624b9987?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" 
+        : "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80",
+      status: 'Saudável'
+    };
+
+    // Puxa a lista antiga do navegador (ou cria uma vazia se não tiver)
+    const petsSalvos = JSON.parse(localStorage.getItem('@petcare:pets') || '[]');
+    
+    // Adiciona o novo pet na lista e salva de novo no navegador
+    localStorage.setItem('@petcare:pets', JSON.stringify([...petsSalvos, novoPet]));
+
+    // Volta para a Home
+    router.push('/home');
   };
 
   return (
@@ -22,7 +50,7 @@ export default function AddPetScreen() {
         <h1 className="text-xl font-bold text-brand-dark">Novo Pet</h1>
       </header>
 
-      <main className="px-6 pt-2">
+      <main className="px-6 pt-2 max-w-2xl mx-auto">
         <form className="bg-white p-6 sm:p-8 rounded-[2.5rem] shadow-sm space-y-5" onSubmit={handleSalvar}>
           
           <div className="flex flex-col items-center justify-center mb-6">
@@ -35,13 +63,24 @@ export default function AddPetScreen() {
 
           <div>
             <label className="block text-sm font-medium text-brand-dark mb-1">Nome do Pet</label>
-            <input type="text" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors text-brand-dark placeholder-gray-400" placeholder="Ex: Rex" required />
+            <input 
+              type="text" 
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+              className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors text-brand-dark placeholder-gray-400" 
+              placeholder="Ex: Rex" 
+              required 
+            />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-brand-dark mb-1">Espécie</label>
-              <select className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange appearance-none transition-colors text-brand-dark">
+              <select 
+                value={especie}
+                onChange={(e) => setEspecie(e.target.value)}
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange appearance-none transition-colors text-brand-dark"
+              >
                 <option>Cachorro</option>
                 <option>Gato</option>
                 <option>Pássaro</option>
@@ -50,29 +89,25 @@ export default function AddPetScreen() {
             </div>
             <div>
               <label className="block text-sm font-medium text-brand-dark mb-1">Peso (kg)</label>
-              <input type="number" step="0.1" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors text-brand-dark placeholder-gray-400" placeholder="0.0" />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-brand-dark mb-1">Altura (cm)</label>
-              <input type="number" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors text-brand-dark placeholder-gray-400" placeholder="0" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-brand-dark mb-1">Sexo</label>
-              <div className="flex gap-2">
-                <button type="button" className="flex-1 bg-brand-purple text-brand-dark py-3 rounded-xl text-sm font-semibold border border-transparent hover:border-brand-purpleDark transition-colors">M</button>
-                <button type="button" className="flex-1 bg-gray-50 text-brand-gray py-3 rounded-xl text-sm font-semibold border border-gray-200 hover:border-brand-purpleDark transition-colors">F</button>
-              </div>
+              <input 
+                type="number" 
+                step="0.1" 
+                value={peso}
+                onChange={(e) => setPeso(e.target.value)}
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors text-brand-dark placeholder-gray-400" 
+                placeholder="0.0" 
+                required
+              />
             </div>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-brand-dark mb-1">Sobre o Pet</label>
             <textarea 
+              value={sobre}
+              onChange={(e) => setSobre(e.target.value)}
               className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors resize-none h-28 text-brand-dark placeholder-gray-400" 
-              placeholder="Conte um pouco sobre a personalidade, gostos e necessidades especiais do seu bichinho..."
+              placeholder="Conte um pouco sobre a personalidade, gostos e necessidades especiais..."
             ></textarea>
           </div>
 

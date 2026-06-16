@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { 
   ChevronLeft, MoreHorizontal, Activity, Syringe, Utensils, Info, 
@@ -9,17 +9,48 @@ import ActionPill from '../../components/ActionPill';
 
 export default function PetDetailsScreen() {
   const router = useRouter();
+  const { id } = router.query;
+  const [pet, setPet] = useState<any>(null);
+
+  useEffect(() => {
+    // Só tenta buscar o pet quando o Next.js terminar de ler a URL por completo
+    if (!router.isReady) return;
+
+    const petsSalvos = JSON.parse(localStorage.getItem('@petcare:pets') || '[]');
+    
+    // Se existe um ID na URL (ou seja, você clicou num pet específico)
+    if (id) {
+      // Forçamos o String() para evitar que Número e Texto deem erro na comparação
+      const petEncontrado = petsSalvos.find((p: any) => String(p.id) === String(id));
+      
+      if (petEncontrado) {
+        setPet(petEncontrado); // Achou o pet novo!
+      } else if (petsSalvos.length > 0) {
+        setPet(petsSalvos[0]); // Se der erro, volta pro primeiro
+      }
+    } else {
+      // Se entrou direto na tela sem clicar num pet, mostra o primeiro
+      if (petsSalvos.length > 0) setPet(petsSalvos[0]);
+    }
+  }, [router.isReady, id]);
+
+  // Tela de carregamento rápida enquanto busca os dados
+  if (!pet) {
+    return (
+      <div className="min-h-screen bg-brand-purple flex items-center justify-center">
+        <p className="text-brand-dark font-bold text-xl animate-pulse">Carregando pet...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-brand-purple pb-10 font-sans">
-      
-      {/* Container Fluido preenchendo toda a tela */}
       <div className="w-full px-8 lg:px-16 xl:px-24">
         
         {/* Header Transparente */}
         <header className="py-6 mb-4 flex justify-between items-center relative z-20">
           <div className="flex items-center gap-4">
-            <button onClick={() => router.back()} className="p-3 bg-white rounded-full shadow-sm hover:bg-gray-50 transition-colors">
+            <button onClick={() => router.push('/home')} className="p-3 bg-white rounded-full shadow-sm hover:bg-gray-50 transition-colors">
               <ChevronLeft className="w-6 h-6 text-brand-dark" />
             </button>
             <h1 className="text-2xl font-bold text-brand-dark">Detalhes do Pet</h1>
@@ -29,48 +60,43 @@ export default function PetDetailsScreen() {
           </button>
         </header>
 
-        {/* Layout em Grid (2 Colunas Fluidas no Desktop) */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 xl:gap-12 pt-4">
           
           {/* COLUNA ESQUERDA: Perfil do Pet */}
           <aside className="col-span-1 bg-white rounded-[2.5rem] p-8 xl:p-10 shadow-sm flex flex-col items-center h-fit">
             
-            {/* Foto do Pet */}
             <div className="w-56 h-56 rounded-full overflow-hidden border-8 border-brand-purple shadow-md mb-8">
               <img 
-                src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
-                alt="Oscar" 
+                src={pet.imagem} 
+                alt={pet.nome} 
                 className="w-full h-full object-cover"
               />
             </div>
 
-            {/* Título */}
             <div className="text-center mb-8">
-              <h2 className="text-4xl font-bold text-brand-dark">Oscar</h2>
+              <h2 className="text-4xl font-bold text-brand-dark">{pet.nome}</h2>
               <p className="text-brand-gray text-base flex items-center justify-center gap-1 mt-2 font-medium">
-                Gato SRD • Macho
+                {pet.especie} • Pet Care
               </p>
             </div>
 
-            {/* Atributos empilhados para a barra lateral */}
             <div className="w-full space-y-4">
               <div className="bg-gray-50 p-5 rounded-2xl flex justify-between items-center border border-gray-100">
                 <span className="text-base text-brand-gray font-medium">Idade</span>
-                <span className="font-bold text-lg text-brand-dark">3 Anos</span>
+                <span className="font-bold text-lg text-brand-dark">---</span>
               </div>
               <div className="bg-gray-50 p-5 rounded-2xl flex justify-between items-center border border-gray-100">
                 <span className="text-base text-brand-gray font-medium">Peso</span>
-                <span className="font-bold text-lg text-brand-dark">3.2 kg</span>
+                <span className="font-bold text-lg text-brand-dark">{pet.peso} kg</span>
               </div>
               <div className="bg-brand-purple/30 p-5 rounded-2xl flex justify-between items-center border border-brand-purpleDark/20">
                 <span className="text-base text-brand-gray font-medium">Status</span>
                 <span className="font-bold text-lg text-green-600 flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div> Vacinado
+                  <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div> {pet.status || 'Saudável'}
                 </span>
               </div>
             </div>
 
-            {/* NOVO: Contato Rápido do Veterinário */}
             <div className="w-full mt-8 bg-orange-50 p-5 rounded-2xl border border-orange-100/50">
               <h4 className="font-bold text-brand-dark flex items-center gap-2 mb-3">
                 <Stethoscope size={18} className="text-brand-orange" /> Vet Responsável
@@ -85,18 +111,15 @@ export default function PetDetailsScreen() {
                 </button>
               </div>
             </div>
-
           </aside>
 
           {/* COLUNA DIREITA: Ações e Informações */}
           <main className="col-span-2 space-y-8">
             
-            {/* Bloco de Módulos de Saúde (Com o bug do arredondamento corrigido!) */}
             <div className="bg-white rounded-[2.5rem] p-8 xl:p-10 shadow-sm">
-              <h3 className="font-bold text-brand-dark text-xl mb-8 border-b border-gray-100 pb-4">
-                Controle de Saúde
-              </h3>
+              <h3 className="font-bold text-brand-dark text-xl mb-8 border-b border-gray-100 pb-4">Controle de Saúde</h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                {/* Aqui futuramente também passaremos o ?id=... para saber de quem é a dieta */}
                 <Link href="/dieta">
                   <div className="h-full rounded-2xl border-2 border-transparent hover:border-brand-orange transition-all shadow-sm hover:shadow-md overflow-hidden cursor-pointer">
                     <ActionPill icon={<Utensils size={28} />} label="Dieta e Peso" />
@@ -115,10 +138,7 @@ export default function PetDetailsScreen() {
               </div>
             </div>
 
-            {/* Grid Dividido: Lembretes e Sobre */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              
-              {/* NOVO: Lembretes Próximos */}
               <div className="bg-white rounded-[2.5rem] p-8 shadow-sm">
                 <h3 className="font-bold text-brand-dark text-xl mb-6 flex items-center gap-3 border-b border-gray-100 pb-4">
                   <Calendar className="w-6 h-6 text-brand-orange" /> Próximos Eventos
@@ -139,19 +159,17 @@ export default function PetDetailsScreen() {
                 </div>
               </div>
 
-              {/* Bloco Sobre */}
               <div className="bg-white rounded-[2.5rem] p-8 shadow-sm">
                 <h3 className="font-bold text-brand-dark text-xl mb-6 flex items-center gap-3 border-b border-gray-100 pb-4">
                   <Info className="w-6 h-6 text-brand-orange" /> Sobre o Pet
                 </h3>
                 <p className="text-brand-gray leading-relaxed text-sm font-medium">
-                  Oscar é um gatinho muito dócil e brincalhão. Ele adora sachê de salmão e tem o costume de dormir na janela durante a tarde. Precisa de acompanhamento constante com hidratação, pois tem histórico de beber pouca água.
+                  {/* Se não tiver digitado nada no cadastro, aparece esse texto padrão */}
+                  {pet.sobre || `${pet.nome} é o seu mais novo companheiro cadastrado no PetCare!`}
                 </p>
               </div>
-
             </div>
 
-            {/* NOVO: Galeria de Fotos */}
             <div className="bg-white rounded-[2.5rem] p-8 xl:p-10 shadow-sm">
               <div className="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
                 <h3 className="font-bold text-brand-dark text-xl flex items-center gap-3">
@@ -161,13 +179,7 @@ export default function PetDetailsScreen() {
               </div>
               <div className="grid grid-cols-4 gap-4">
                 <div className="aspect-square rounded-2xl overflow-hidden cursor-pointer hover:opacity-80 transition-opacity border border-gray-100">
-                  <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Oscar dormindo" className="w-full h-full object-cover" />
-                </div>
-                <div className="aspect-square rounded-2xl overflow-hidden cursor-pointer hover:opacity-80 transition-opacity border border-gray-100">
-                  <img src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Oscar brincando" className="w-full h-full object-cover" />
-                </div>
-                <div className="aspect-square rounded-2xl overflow-hidden cursor-pointer hover:opacity-80 transition-opacity border border-gray-100">
-                  <img src="https://images.unsplash.com/photo-1495360010541-f48722b34f7d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Oscar curioso" className="w-full h-full object-cover" />
+                  <img src={pet.imagem} alt="Foto do pet" className="w-full h-full object-cover" />
                 </div>
                 <div className="aspect-square rounded-2xl bg-gray-50 flex items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors border-2 border-dashed border-gray-200">
                   <span className="text-brand-gray font-semibold text-sm">+ Adicionar</span>
