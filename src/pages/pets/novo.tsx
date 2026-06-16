@@ -12,9 +12,9 @@ export default function AddPetScreen() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-purple">
+    <div className="min-h-screen bg-brand-purple pb-10">
       {/* Header */}
-      <header className="p-6 flex items-center gap-4">
+      <header className="p-6 flex items-center gap-4 relative z-10">
         <button 
           onClick={() => router.back()} 
           className="p-2 bg-white rounded-full shadow-sm hover:bg-gray-50 transition-colors"
@@ -24,8 +24,8 @@ export default function AddPetScreen() {
         <h1 className="text-xl font-bold text-brand-dark">Novo Pet</h1>
       </header>
 
-      <main className="p-6 pt-0">
-        <form className="bg-white p-6 rounded-[2rem] shadow-sm space-y-5" onSubmit={handleSalvar}>
+      <main className="px-6 pt-2">
+        <form className="bg-white p-6 sm:p-8 rounded-[2.5rem] shadow-sm space-y-5" onSubmit={handleSalvar}>
           
           {/* Upload de Foto */}
           <div className="flex flex-col items-center justify-center mb-6">
@@ -38,13 +38,13 @@ export default function AddPetScreen() {
 
           <div>
             <label className="block text-sm font-medium text-brand-dark mb-1">Nome do Pet</label>
-            <input type="text" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange" placeholder="Ex: Rex" required />
+            <input type="text" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors" placeholder="Ex: Rex" required />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-brand-dark mb-1">Espécie</label>
-              <select className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange appearance-none">
+              <select className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange appearance-none transition-colors">
                 <option>Cachorro</option>
                 <option>Gato</option>
                 <option>Pássaro</option>
@@ -53,14 +53,14 @@ export default function AddPetScreen() {
             </div>
             <div>
               <label className="block text-sm font-medium text-brand-dark mb-1">Peso (kg)</label>
-              <input type="number" step="0.1" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange" placeholder="0.0" />
+              <input type="number" step="0.1" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors" placeholder="0.0" />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-brand-dark mb-1">Altura (cm)</label>
-              <input type="number" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange" placeholder="0" />
+              <input type="number" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors" placeholder="0" />
             </div>
             <div>
               <label className="block text-sm font-medium text-brand-dark mb-1">Sexo</label>
@@ -71,7 +71,16 @@ export default function AddPetScreen() {
             </div>
           </div>
 
-          <button type="submit" className="w-full bg-brand-orange hover:bg-brand-orangeHover text-white font-semibold py-4 rounded-2xl shadow-md transition-all mt-4 text-lg">
+          {/* NOVO CAMPO: Sobre o Pet */}
+          <div>
+            <label className="block text-sm font-medium text-brand-dark mb-1">Sobre o Pet</label>
+            <textarea 
+              className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-brand-orange transition-colors resize-none h-28" 
+              placeholder="Conte um pouco sobre a personalidade, gostos e necessidades especiais do seu bichinho..."
+            ></textarea>
+          </div>
+
+          <button type="submit" className="w-full bg-brand-orange hover:bg-brand-orangeHover text-white font-semibold py-4 rounded-2xl shadow-md transition-all mt-6 text-lg">
             Salvar Pet
           </button>
         </form>
