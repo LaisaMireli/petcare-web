@@ -11,7 +11,7 @@ export default function AddPetScreen() {
   const [peso, setPeso] = useState('');
   const [sobre, setSobre] = useState('');
 
-  const handleSalvar = (e: React.FormEvent) => {
+  /*const handleSalvar = (e: React.FormEvent) => {
     e.preventDefault();
     
     // Cria o objeto do novo pet
@@ -36,6 +36,23 @@ export default function AddPetScreen() {
 
     // Volta para a Home
     router.push('/home');
+  };*/
+  const handleSalvar = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      await fetch('http://localhost:3001/pets/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name: nome }) 
+      });
+
+      router.push('/home');
+    } catch (erro) {
+      console.error('Erro ao guardar o animal:', erro);
+    }
   };
 
   return (
