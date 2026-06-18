@@ -8,7 +8,7 @@ export default function HomeDashboard() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [pets, setPets] = useState<any[]>([]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const petsSalvos = localStorage.getItem('@petcare:pets');
     if (petsSalvos && JSON.parse(petsSalvos).length > 0) {
       setPets(JSON.parse(petsSalvos));
@@ -25,6 +25,41 @@ export default function HomeDashboard() {
       setPets(oscarPadrao);
       localStorage.setItem('@petcare:pets', JSON.stringify(oscarPadrao));
     }
+  }, []);*/
+
+  useEffect(() => {
+    async function carregarPets() {
+      try {
+        const resposta = await fetch('http://localhost:3001/pets/owner');
+        const dados = await resposta.json();
+
+        if (dados && dados.length > 0) {
+          const petsFormatados = dados.map((pet: any, index: number) => {
+            const ehPrimeiro = index === 0;
+            return {
+              id: pet.id,
+              nome: pet.name,
+              especie: ehPrimeiro ? 'Gato' : 'Cão',
+              peso: ehPrimeiro ? '4.2' : '7.4',
+              sobre: ehPrimeiro 
+                ? 'Oscar é super dócil e tranquilo. Passa boa parte da tarde dormindo perto da janela do quarto e tem preferência exclusiva por ração úmida de sachê de salmão.'
+                : 'Rex é um companheiro extremamente ativo e brincalhão. Adora correr no quintal, gasta muita energia e precisa de atenção redobrada com a hidratação.',
+              imagem: ehPrimeiro 
+                ? 'https://images.unsplash.com/photo-1543852786-1cf6624b9987?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+                : 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80',
+              status: 'Saudável'
+            };
+          });
+          
+          setPets(petsFormatados);
+          localStorage.setItem('@petcare:pets', JSON.stringify(petsFormatados));
+        }
+      } catch (erro) {
+        console.error('Erro ao conectar com a API:', erro);
+      }
+    }
+
+    carregarPets();
   }, []);
 
   const handleLogout = () => {
@@ -90,7 +125,7 @@ export default function HomeDashboard() {
 
           {/* Cards Rápidos */}
           <div className="w-full grid grid-cols-4 gap-6 xl:gap-8">
-            <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100 flex items-center gap-5 hover:border-brand-purple transition-colors"><div className="bg-brand-purple/50 p-4 rounded-2xl text-brand-purpleDark"><ShieldCheck className="w-8 h-8" /></div><div><p className="text-3xl font-extrabold text-brand-dark">1</p><p className="text-sm text-brand-gray font-semibold">Pet Vacinado</p></div></div>
+            <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100 flex items-center gap-5 hover:border-brand-purple transition-colors"><div className="bg-brand-purple/50 p-4 rounded-2xl text-brand-purpleDark"><ShieldCheck className="w-8 h-8" /></div><div><p className="text-3xl font-extrabold text-brand-dark">2</p><p className="text-sm text-brand-gray font-semibold">Pet Vacinado</p></div></div>
             <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100 flex items-center gap-5 hover:border-brand-orange transition-colors"><div className="bg-brand-orange/20 p-4 rounded-2xl text-brand-orange"><Heart className="w-8 h-8" /></div><div><p className="text-3xl font-extrabold text-brand-dark">Bom</p><p className="text-sm text-brand-gray font-semibold">Humor Geral</p></div></div>
             <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100 flex items-center gap-5 hover:border-blue-300 transition-colors"><div className="bg-blue-50 p-4 rounded-2xl text-blue-500"><Stethoscope className="w-8 h-8" /></div><div><p className="text-3xl font-extrabold text-brand-dark">0</p><p className="text-sm text-brand-gray font-semibold">Consultas no Mês</p></div></div>
             <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100 flex items-center gap-5 hover:border-red-300 transition-colors"><div className="bg-red-50 p-4 rounded-2xl text-red-500"><AlertCircle className="w-8 h-8" /></div><div><p className="text-3xl font-extrabold text-brand-dark">1</p><p className="text-sm text-brand-gray font-semibold">Alerta Pendente</p></div></div>
